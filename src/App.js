@@ -29,19 +29,11 @@ function App() {
     }
   }
 
-  const output = (word) => {
-    let start = word.toLowerCase().indexOf(search.toLowerCase())
-    let end = start + search.length
-    let p 
-    if(start !== 0 && end !== (word.length -1))
-      p = <p key={word}> {word.substring(0,start)}<span className="textColor">{word.substring(start,end)}</span>{word.substring(end,word.length-1)}</p>
-    else if(start === 0 && end !== (word.length -1))
-      p = <p key={word}><span className="textColor">{word.substring(start,end)}</span>{word.substring(end,word.length-1)}</p>
-    else if(start !== 0 && end === (word.length -1))
-      p = <p key={word}>{word.substring(0,start)}<span className="textColor">{word.substring(start,end)}</span></p>
-    else
-      p = <p key={word}><span className="textColor">{word.substring(start,end)}</span></p>
-    return p
+  const output = (word,index) => {
+    let parts = word.split(new RegExp(`(${search})`,'gi')) 
+    return <p key={index}>
+              <span>{parts.map((part,index) => part.toLowerCase() === search.toLowerCase() ? <span key={index} className="textColor">{part}</span> : part )}</span>
+           </p>
   }
 
   return (
